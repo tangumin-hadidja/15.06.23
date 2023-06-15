@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+    <style>
+        .button{
+            background-color: red;
+            padding: 10px;
+            width: 100px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+        }
+        .button a{
+            color: white;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="user"></div>
+    <div class="email"></div>
+    <div class="phone"></div>
+    <div class="address"></div>
+    <div class="website"></div>
+    <div class="code"></div>
+
+    <div class="button">
+        <a href="./req.html">Login</a>
+    </div>
+
+    <script>
+        const requestRL = 'https://jsonplaceholder.typicode.com/users/1'
+
+        fetch(requestRL)
+        .then(response =>{
+            if(response.ok) {
+                return response.json()
+            }
+            return response.json().then(error => {
+                const e = new Error('Что-то пошло не так')
+                e.data = error 
+                throw e
+            })
+        }).then((data) => {
+            userFirst = document.querySelector('.user')
+            userFirst.innerHTML = data['name']
+
+            email = document.querySelector('.email')
+            email.innerHTML = data['email']
+
+            phone = document.querySelector('.phone')
+            phone.innerHTML = data['phone']
+
+            address = document.querySelector('.address')
+            address.innerHTML = data['address']['city']
+
+            code = document.querySelector('.code')
+            code.innerHTML = data['address']['zipcode']
+
+            website = document.querySelector('.website')
+            website.innerHTML = data['website']
+        })
+
+
+    </script>
+</body>
+</html>
